@@ -17,10 +17,15 @@ public class ChatSHA1 implements ChatHash {
 
 	public ChatSHA1(ChatNode node) {
 		StringBuilder sb = new StringBuilder();
+		
 		sb.append(node.getAuthor());
+		sb.append(" ");
 		sb.append(node.getTime());
+		sb.append(" ");
 		sb.append(node.getContentHash());
+		sb.append(" ");
 		sb.append(node.getParentHash());
+		
 		hash = hash(sb.toString());
 	}
 
