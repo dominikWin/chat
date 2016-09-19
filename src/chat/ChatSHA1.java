@@ -33,7 +33,7 @@ public class ChatSHA1 implements ChatHash {
 		byte out[];
 		MessageDigest hashFunction = null;
 		try {
-			hashFunction = MessageDigest.getInstance("SHA1");
+			hashFunction = MessageDigest.getInstance("SHA-1");
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
