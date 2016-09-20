@@ -8,18 +8,34 @@ import chat.interfaces.ChatDatabase;
 import chat.interfaces.ChatHash;
 
 public class LocalDB implements ChatDatabase {
-	
+
 	private static final String PATH = "./";
-	private static final String DIR_NAME = ".chatdata";
-	private static final String OBJECT_DIR_NAME = "objects";
+	private static final String DATA_DIR = PATH + ".chatdata";
+	private static final String OBJECTS_DIR = DATA_DIR + "/objects";
 	
+	private static final String REQUIRED_DIRS[] = new String[] {DATA_DIR, OBJECTS_DIR};
+
 	private boolean dirExists(String path) {
 		File f = new File(path);
 		return f.exists() && f.isDirectory();
 	}
-	
-	private boolean dataDirExists() {
-		return dirExists(PATH + DIR_NAME);
+
+	private boolean makeDir(String path) {
+		File f = new File(path);
+		return f.mkdir();
+	}
+
+	private boolean verifyDir() {
+		for(String path : REQUIRED_DIRS) {
+			if(!dirExists(path)) {
+				System.out.println("Creating dir " + path);
+				if(!makeDir(path)) {
+					System.err.println("Can't make dir " + path);
+					return true;
+				}
+			}
+		}
+		return true;
 	}
 
 	@Override
