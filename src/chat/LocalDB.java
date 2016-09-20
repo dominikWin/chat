@@ -6,6 +6,7 @@ import chat.data.ChatContent;
 import chat.data.ChatNode;
 import chat.interfaces.ChatDatabase;
 import chat.interfaces.ChatHash;
+import chat.interfaces.ChatSerializer;
 
 public class LocalDB implements ChatDatabase {
 
@@ -14,6 +15,17 @@ public class LocalDB implements ChatDatabase {
 	private static final String OBJECTS_DIR = DATA_DIR + "/objects";
 	
 	private static final String REQUIRED_DIRS[] = new String[] {DATA_DIR, OBJECTS_DIR};
+	
+	private ChatSerializer serializer;
+	
+	public LocalDB(ChatSerializer serializer) {
+		if(!verifyDir()) {
+			System.out.println("Can't verify data directory");
+			System.exit(1);
+		}
+		assert(serializer != null);
+		this.serializer = serializer;
+	}
 
 	private boolean dirExists(String path) {
 		File f = new File(path);
@@ -31,7 +43,7 @@ public class LocalDB implements ChatDatabase {
 				System.out.println("Creating dir " + path);
 				if(!makeDir(path)) {
 					System.err.println("Can't make dir " + path);
-					return true;
+					return false;
 				}
 			}
 		}
@@ -40,8 +52,7 @@ public class LocalDB implements ChatDatabase {
 
 	@Override
 	public boolean existsNode(ChatHash hash) {
-		// TODO Auto-generated method stub
-		return false;
+		
 	}
 
 	@Override
@@ -52,14 +63,12 @@ public class LocalDB implements ChatDatabase {
 
 	@Override
 	public void add(ChatNode node) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void add(ChatContent content) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }
