@@ -1,8 +1,8 @@
 package chat;
 
-public class ChatTimer {
+public class UNIXTime {
 	
-	public static long getTime() {
+	public static long getUNIXTime() {
 		return (long) ((long) System.currentTimeMillis() / (long) 1000);
 	}
 

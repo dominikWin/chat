@@ -32,7 +32,7 @@ public class ChatNode {
 	}
 	
 	public static ChatNode getInitialNode() {
-		ChatNode node = new ChatNode(Properties.SYSTEM_NICK, ChatTimer.getTime(), null, null);
+		ChatNode node = new ChatNode(Properties.SYSTEM_NICK, UNIXTime.getUNIXTime(), null, null);
 		return node;
 	}
 
