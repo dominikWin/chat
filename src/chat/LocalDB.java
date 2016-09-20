@@ -6,6 +6,7 @@ import java.nio.file.Files;
 
 import chat.data.ChatText;
 import chat.data.ChatNode;
+import chat.interfaces.ChatCompressor;
 import chat.interfaces.ChatDatabase;
 import chat.interfaces.ChatHash;
 import chat.interfaces.ChatSerializer;
@@ -20,14 +21,16 @@ public class LocalDB implements ChatDatabase {
 	private static final String REQUIRED_DIRS[] = new String[] { DATA_DIR, OBJECTS_DIR, REFS_DIR };
 
 	private ChatSerializer serializer;
+	private ChatCompressor compressor;
 
-	public LocalDB(ChatSerializer serializer) {
+	public LocalDB(ChatSerializer serializer, ChatCompressor compressor) {
 		if (!verifyDir()) {
 			System.out.println("Can't verify data directory");
 			System.exit(1);
 		}
 		assert (serializer != null);
 		this.serializer = serializer;
+		this.compressor = compressor;
 	}
 
 	private byte[] getFileContents(String path) {
@@ -103,6 +106,7 @@ public class LocalDB implements ChatDatabase {
 		byte[] data = serializer.serialize(node);
 		HashSHA1 h = new HashSHA1(node);
 		String hash = h.toString();
+		data = compressor.deflate(data);
 		writeToFile(OBJECTS_DIR + "/" + hash, data);
 		return h;
 	}
@@ -112,6 +116,7 @@ public class LocalDB implements ChatDatabase {
 		byte[] data = serializer.serialize(content);
 		HashSHA1 h = new HashSHA1(content);
 		String hash = h.toString();
+		data = compressor.deflate(data);
 		writeToFile(OBJECTS_DIR + "/" + hash, data);
 		return h;
 	}

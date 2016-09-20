@@ -11,7 +11,7 @@ public class Main {
 	public static void main(String[] args) {
 //		ChatText c = new ChatText(new Scanner(System.in).nextLine());
 		
-		LocalDB db = new LocalDB(new SerializeJSON());
+		LocalDB db = new LocalDB(new SerializeJSON(), new CompressZLIB());
 		ChatHash hash = db.add(new ChatText("Text Text"));
 		db.add(new ChatNode("Auth", 5, hash, null));
 		
