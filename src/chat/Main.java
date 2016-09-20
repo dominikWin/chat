@@ -13,7 +13,9 @@ public class Main {
 		
 		LocalDB db = new LocalDB(new SerializeJSON(), new CompressZLIB());
 		ChatHash hash = db.add(new ChatText("Text Text"));
-		db.add(new ChatNode("Auth", 5, hash, null));
+		hash = db.add(new ChatNode("Auth", 5, hash, null));
+		
+		System.out.println(db.getNode(hash).getAuthor());
 		
 		
 //		HashSHA1 h = new  HashSHA1(c);

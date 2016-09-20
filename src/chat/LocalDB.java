@@ -121,4 +121,18 @@ public class LocalDB implements ChatDatabase {
 		return h;
 	}
 
+	@Override
+	public ChatNode getNode(ChatHash hash) {
+		assert (existsNode(hash));
+		return (ChatNode) serializer
+				.deserialize(compressor.inflate(getFileContents(OBJECTS_DIR + "/" + hash.toString())));
+	}
+
+	@Override
+	public ChatText getText(ChatHash hash) {
+		assert (existsText(hash));
+		return (ChatText) serializer
+				.deserialize(compressor.inflate(getFileContents(OBJECTS_DIR + "/" + hash.toString())));
+	}
+
 }

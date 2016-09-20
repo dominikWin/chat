@@ -9,4 +9,7 @@ public interface ChatDatabase {
 	
 	public ChatHash add(ChatNode node);
 	public ChatHash add(ChatText content);
+	
+	public ChatNode getNode(ChatHash hash);
+	public ChatText getText(ChatHash hash);
 }
