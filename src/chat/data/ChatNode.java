@@ -1,5 +1,6 @@
 package chat.data;
 
+import chat.HashSHA1;
 import chat.ServerSettings;
 import chat.UNIXTime;
 import chat.interfaces.ChatHash;
@@ -15,13 +16,20 @@ public class ChatNode {
 	private long time;
 	private ChatHash text, parent;
 	
-	public ChatNode(String author, long time, ChatHash content, ChatHash parent) {
+	public ChatNode(String author, long time, ChatHash text, ChatHash parent) {
 		this.author = author;
 		this.time = time;
-		this.text = content;
+		this.text = text;
 		this.parent = parent;
 	}
 	
+	public ChatNode(String author, long time, String text, String parent) {
+		this.author = author;
+		this.time = time;
+		this.text = new HashSHA1(text);
+		this.parent = new HashSHA1(parent);
+	}
+
 	public String getAuthor() {
 		return author;
 	}
@@ -38,9 +46,9 @@ public class ChatNode {
 		return parent;
 	}
 	
-	public static ChatNode getInitialNode() {
-		ChatNode node = new ChatNode(ServerSettings.SYSTEM_NICK, UNIXTime.getUNIXTime(), null, null);
-		return node;
-	}
+//	public static ChatNode getInitialNode() {
+//		ChatNode node = new ChatNode(ServerSettings.SYSTEM_NICK, UNIXTime.getUNIXTime(), (Ch));
+//		return node;
+//	}
 
 }
