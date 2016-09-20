@@ -9,15 +9,15 @@ import chat.data.ChatContent;
 import chat.data.ChatNode;
 import chat.interfaces.ChatHash;
 
-public class ChatSHA1 implements ChatHash {
+public class HashSHA1 implements ChatHash {
 
 	byte[] hash;
 
-	public ChatSHA1(ChatContent content) {
+	public HashSHA1(ChatContent content) {
 		hash = hash(content.getContent());
 	}
 
-	public ChatSHA1(ChatNode node) {
+	public HashSHA1(ChatNode node) {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append(node.getAuthor());
