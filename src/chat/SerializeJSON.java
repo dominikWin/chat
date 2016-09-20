@@ -60,6 +60,10 @@ public class SerializeJSON implements ChatSerializer {
 
 		return out;
 	}
+	
+	private ChatText reconstructText(String text) {
+		return new ChatText(text);
+	}
 
 	@Override
 	public Object deserialize(byte[] data) {
@@ -75,7 +79,7 @@ public class SerializeJSON implements ChatSerializer {
 		if (text.startsWith(NODE_PREFIX))
 			return reconstructNode(text.substring(NODE_PREFIX.length()));
 		else if (text.startsWith(TEXT_PREFIX))
-			return reconstructNode(text.substring(TEXT_PREFIX.length()));
+			return reconstructText(text.substring(TEXT_PREFIX.length()));
 		else
 			return null;
 	}

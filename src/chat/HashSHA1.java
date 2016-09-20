@@ -27,6 +27,10 @@ public class HashSHA1 implements ChatHash {
 	}
 	
 	public HashSHA1(String hashStr) {
+		if(hashStr == null || hashStr.equals("null")) {
+			hash = null;
+			return;
+		}
 		hash = new byte[20];
 		for(int i = 0; i < 40; i++) {
 			hash[i/2] = (byte) ((hash[i/2] << ((i%2) * 4)) + hex(hashStr.charAt(i)));

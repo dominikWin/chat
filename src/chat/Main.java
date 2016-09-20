@@ -16,6 +16,8 @@ public class Main {
 		System.out.println(h + ":" + h.toString().length());
 		
 		ChatSerializer serializer = new SerializeJSON();
-		System.out.println(new String(serializer.serialize(new ChatNode("Chat", 2, new HashSHA1(), new HashSHA1()))));
+		String s;
+		System.out.println(s = new String(serializer.serialize(new ChatNode("Chat", 2, new HashSHA1(), new HashSHA1()))));
+		System.out.println(((ChatNode) serializer.deserialize(s.getBytes())).getTime());
 	}
 }
