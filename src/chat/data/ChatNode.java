@@ -1,6 +1,6 @@
 package chat.data;
 
-import chat.Properties;
+import chat.ServerSettings;
 import chat.UNIXTime;
 import chat.interfaces.ChatHash;
 
@@ -34,7 +34,7 @@ public class ChatNode {
 	}
 	
 	public static ChatNode getInitialNode() {
-		ChatNode node = new ChatNode(Properties.SYSTEM_NICK, UNIXTime.getUNIXTime(), null, null);
+		ChatNode node = new ChatNode(ServerSettings.SYSTEM_NICK, UNIXTime.getUNIXTime(), null, null);
 		return node;
 	}
 

@@ -1,6 +1,6 @@
 package chat;
 
-public class Properties {
+public class ServerSettings {
 	
 	public static final String SYSTEM_NICK = "[SYSTEM]";
 
