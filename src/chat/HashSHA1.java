@@ -89,5 +89,9 @@ public class HashSHA1 implements ChatHash {
 			out = "0" + out;
 		return out;
 	}
+	
+	public boolean isNull() {
+		return hash == null;
+	}
 
 }

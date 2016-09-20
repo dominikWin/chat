@@ -4,4 +4,6 @@ public interface ChatHash {
 	
 	public String toString();
 	
+	public boolean isNull();
+	
 }

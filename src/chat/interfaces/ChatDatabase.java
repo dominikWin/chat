@@ -5,8 +5,8 @@ import chat.data.ChatNode;
 
 public interface ChatDatabase {
 	public boolean existsNode(ChatHash hash);
-	public boolean existsContent(ChatHash hash);
+	public boolean existsText(ChatHash hash);
 	
-	public void add(ChatNode node);
-	public void add(ChatText content);
+	public ChatHash add(ChatNode node);
+	public ChatHash add(ChatText content);
 }
