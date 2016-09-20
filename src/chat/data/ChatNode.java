@@ -6,14 +6,19 @@ import chat.interfaces.ChatHash;
 
 public class ChatNode {
 	
+	public static final String KEY_AUTHOR = "author";
+	public static final String KEY_TIME = "time";
+	public static final String KEY_TEXT = "text";
+	public static final String KEY_PARENT = "parent";
+	
 	private String author;
 	private long time;
-	private ChatHash content, parent;
+	private ChatHash text, parent;
 	
 	public ChatNode(String author, long time, ChatHash content, ChatHash parent) {
 		this.author = author;
 		this.time = time;
-		this.content = content;
+		this.text = content;
 		this.parent = parent;
 	}
 	
@@ -25,8 +30,8 @@ public class ChatNode {
 		return time;
 	}
 	
-	public ChatHash getContentHash() {
-		return content;
+	public ChatHash getTextHash() {
+		return text;
 	}
 	
 	public ChatHash getParentHash() {

@@ -1,10 +1,10 @@
 package chat.data;
 
-public class ChatContent {
+public class ChatText {
 	
 	private String content;
 	
-	public ChatContent(String content) {
+	public ChatText(String content) {
 		this.content = content;
 	}
 	

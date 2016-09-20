@@ -2,7 +2,7 @@ package chat;
 
 import java.io.File;
 
-import chat.data.ChatContent;
+import chat.data.ChatText;
 import chat.data.ChatNode;
 import chat.interfaces.ChatDatabase;
 import chat.interfaces.ChatHash;
@@ -52,7 +52,7 @@ public class LocalDB implements ChatDatabase {
 
 	@Override
 	public boolean existsNode(ChatHash hash) {
-		
+		return false;
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class LocalDB implements ChatDatabase {
 	}
 
 	@Override
-	public void add(ChatContent content) {
+	public void add(ChatText content) {
 		
 	}
 

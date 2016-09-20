@@ -1,6 +1,6 @@
 package chat.interfaces;
 
-import chat.data.ChatContent;
+import chat.data.ChatText;
 import chat.data.ChatNode;
 
 public interface ChatCompressor {

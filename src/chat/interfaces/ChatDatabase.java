@@ -1,6 +1,6 @@
 package chat.interfaces;
 
-import chat.data.ChatContent;
+import chat.data.ChatText;
 import chat.data.ChatNode;
 
 public interface ChatDatabase {
@@ -8,5 +8,5 @@ public interface ChatDatabase {
 	public boolean existsContent(ChatHash hash);
 	
 	public void add(ChatNode node);
-	public void add(ChatContent content);
+	public void add(ChatText content);
 }

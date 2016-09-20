@@ -5,7 +5,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import chat.data.ChatContent;
+import chat.data.ChatText;
 import chat.data.ChatNode;
 import chat.interfaces.ChatHash;
 
@@ -13,7 +13,7 @@ public class HashSHA1 implements ChatHash {
 
 	byte[] hash;
 
-	public HashSHA1(ChatContent content) {
+	public HashSHA1(ChatText content) {
 		hash = hash(content.getContent());
 	}
 
@@ -24,7 +24,7 @@ public class HashSHA1 implements ChatHash {
 		sb.append(" ");
 		sb.append(node.getTime());
 		sb.append(" ");
-		sb.append(node.getContentHash());
+		sb.append(node.getTextHash());
 		sb.append(" ");
 		sb.append(node.getParentHash());
 		
@@ -57,7 +57,11 @@ public class HashSHA1 implements ChatHash {
 	}
 
 	public String toString() {
-		return new BigInteger(1, hash).toString(16);
+		String out = new BigInteger(1, hash).toString(16);
+		// BigInteger will not include an 0 as the first number
+		while(out.length() < 40)
+			out = "0" + out;
+		return out;
 	}
 
 }
