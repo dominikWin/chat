@@ -1,7 +1,7 @@
 package chat.interfaces;
 
-import chat.ChatContent;
-import chat.ChatNode;
+import chat.data.ChatContent;
+import chat.data.ChatNode;
 
 public interface ChatDatabase {
 	public boolean existsNode(String hash);

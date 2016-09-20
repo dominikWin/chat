@@ -5,6 +5,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import chat.data.ChatContent;
+import chat.data.ChatNode;
 import chat.interfaces.ChatHash;
 
 public class ChatSHA1 implements ChatHash {
