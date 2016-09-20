@@ -30,5 +30,10 @@ public class ChatNode {
 	public ChatHash getParentHash() {
 		return parent;
 	}
+	
+	public static ChatNode getInitialNode() {
+		ChatNode node = new ChatNode(Properties.SYSTEM_NICK, ChatTimer.getTime(), null, null);
+		return node;
+	}
 
 }
