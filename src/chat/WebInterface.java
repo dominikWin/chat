@@ -2,7 +2,8 @@ package chat;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.Arrays;
+
+import org.json.simple.JSONObject;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -11,17 +12,41 @@ import com.sun.net.httpserver.HttpServer;
 import chat.interfaces.ChatDatabase;
 
 public class WebInterface {
-	HttpServer server;
-	ChatDatabase db;
+	static HttpServer server;
+	static ChatDatabase db;
 
-	public WebInterface(ChatDatabase db) {
+	private static void fail(HttpExchange s, String reason) {
+		JSONObject json = new JSONObject();
+		json.put("fail", reason);
+		String out = json.toJSONString();
 		try {
-			this.server = HttpServer.create(new InetSocketAddress(8000), 0);
+			s.sendResponseHeaders(200, out.getBytes().length);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			s.getResponseBody().write(out.getBytes());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.db = db;
+		try {
+			s.getResponseBody().close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public WebInterface(ChatDatabase db) {
+		try {
+			WebInterface.server = HttpServer.create(new InetSocketAddress(8001), 0);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WebInterface.db = db;
 		server.createContext("/ref", new RefHandler());
 		server.setExecutor(null);
 		server.start();
@@ -32,22 +57,29 @@ public class WebInterface {
 		@Override
 		public void handle(HttpExchange s) throws IOException {
 			String uri = s.getRequestURI().toString();
-			System.out.println(uri);
 
 			while (uri.endsWith("/"))
 				uri = uri.substring(0, uri.length() - 1);
-			
-			uri = uri.substring(1, uri.length()); //Remove '/' from beginning
-			
-			System.out.println("Trimmed " + uri);
-			
-			String split[] = uri.split("/");
-			
-			System.out.println(Arrays.toString(split));
-			
-			s.sendResponseHeaders(200, 0);
 
-			s.getResponseBody().write("Text".getBytes());
+			uri = uri.substring(1, uri.length()); // Remove '/' from beginning
+
+			String split[] = uri.split("/");
+
+			if (split.length != 2) {
+				fail(s, "Invalid number of args");
+				return;
+			}
+
+			if (!db.existsRef(split[1])) {
+				fail(s, "Ref does not exist");
+				return;
+			}
+
+			String out = db.getRef(split[1]).getHead().toString();
+
+			s.sendResponseHeaders(200, out.length());
+
+			s.getResponseBody().write(out.getBytes());
 			s.getResponseBody().close();
 		}
 

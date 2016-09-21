@@ -17,7 +17,6 @@ public class Main {
 //		
 //		System.out.println(db.getNode(hash).getAuthor());
 //		db.setRef("master", hash);
-		System.out.println(db.listRefs());
 		
 		WebInterface webInterface = new WebInterface(db);
 		
