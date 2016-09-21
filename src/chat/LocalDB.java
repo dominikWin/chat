@@ -91,7 +91,8 @@ public class LocalDB implements ChatDatabase {
 			return false;
 		}
 		String path = OBJECTS_DIR + "/" + hash.toString();
-		return fileExists(path) && serializer.deserialize(getFileContents(path)) instanceof ChatNode;
+		Object parsed = serializer.deserialize(compressor.inflate(getFileContents(path)));
+		return fileExists(path) && parsed != null && parsed instanceof ChatNode;
 	}
 
 	@Override
@@ -158,7 +159,7 @@ public class LocalDB implements ChatDatabase {
 	public List<String> listRefs() {
 		File f = new File(REFS_DIR);
 		List<String> out = new ArrayList<>();
-		for(String s : f.list())
+		for (String s : f.list())
 			out.add(s);
 		return out;
 	}
