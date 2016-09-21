@@ -19,6 +19,8 @@ public class Main {
 //		db.setRef("master", hash);
 		System.out.println(db.listRefs());
 		
+		WebInterface webInterface = new WebInterface(db);
+		
 		
 //		HashSHA1 h = new  HashSHA1(c);
 //		System.out.println(h + ":" + h.toString().length());
