@@ -1,6 +1,9 @@
 package chat.interfaces;
 
 import chat.data.ChatText;
+
+import java.util.List;
+
 import chat.data.ChatNode;
 import chat.data.ChatRef;
 
@@ -17,4 +20,5 @@ public interface ChatDatabase {
 	public boolean existsRef(String name);
 	public void setRef(String name, ChatHash hash);
 	public ChatRef getRef(String name);
+	public List<String> listRefs();
 }

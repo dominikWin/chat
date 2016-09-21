@@ -12,11 +12,12 @@ public class Main {
 //		ChatText c = new ChatText(new Scanner(System.in).nextLine());
 		
 		LocalDB db = new LocalDB(new SerializeJSON(), new CompressZLIB());
-		ChatHash hash = db.add(new ChatText("Text Text"));
-		hash = db.add(new ChatNode("Auth", 5, hash, null));
-		
-		System.out.println(db.getNode(hash).getAuthor());
-		db.setRef("master", hash);
+//		ChatHash hash = db.add(new ChatText("Text Text"));
+//		hash = db.add(new ChatNode("Auth", 5, hash, null));
+//		
+//		System.out.println(db.getNode(hash).getAuthor());
+//		db.setRef("master", hash);
+		System.out.println(db.listRefs());
 		
 		
 //		HashSHA1 h = new  HashSHA1(c);

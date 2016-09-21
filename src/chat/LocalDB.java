@@ -3,6 +3,8 @@ package chat;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 
 import chat.data.ChatText;
 import chat.data.ChatNode;
@@ -150,6 +152,15 @@ public class LocalDB implements ChatDatabase {
 	public ChatRef getRef(String name) {
 		assert (existsRef(name));
 		return new ChatRef(name, new HashSHA1(new String(getFileContents(REFS_DIR + "/" + name)).trim()));
+	}
+
+	@Override
+	public List<String> listRefs() {
+		File f = new File(REFS_DIR);
+		List<String> out = new ArrayList<>();
+		for(String s : f.list())
+			out.add(s);
+		return out;
 	}
 
 }
