@@ -6,4 +6,8 @@ public interface ChatHash {
 	
 	public boolean isNull();
 	
+	public boolean equals(ChatHash other);
+	
+	public byte[] getHash();
+	
 }

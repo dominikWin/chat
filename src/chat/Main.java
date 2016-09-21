@@ -16,6 +16,7 @@ public class Main {
 		hash = db.add(new ChatNode("Auth", 5, hash, null));
 		
 		System.out.println(db.getNode(hash).getAuthor());
+		db.setRef("master", hash);
 		
 		
 //		HashSHA1 h = new  HashSHA1(c);

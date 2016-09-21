@@ -6,6 +6,7 @@ import java.nio.file.Files;
 
 import chat.data.ChatText;
 import chat.data.ChatNode;
+import chat.data.ChatRef;
 import chat.interfaces.ChatCompressor;
 import chat.interfaces.ChatDatabase;
 import chat.interfaces.ChatHash;
@@ -133,6 +134,22 @@ public class LocalDB implements ChatDatabase {
 		assert (existsText(hash));
 		return (ChatText) serializer
 				.deserialize(compressor.inflate(getFileContents(OBJECTS_DIR + "/" + hash.toString())));
+	}
+
+	@Override
+	public boolean existsRef(String name) {
+		return fileExists(REFS_DIR + "/" + name);
+	}
+
+	@Override
+	public void setRef(String name, ChatHash hash) {
+		writeToFile(REFS_DIR + "/" + name, (hash.toString() + "\n").getBytes());
+	}
+
+	@Override
+	public ChatRef getRef(String name) {
+		assert (existsRef(name));
+		return new ChatRef(name, new HashSHA1(new String(getFileContents(REFS_DIR + "/" + name)).trim()));
 	}
 
 }

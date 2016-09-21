@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 import chat.data.ChatText;
 import chat.data.ChatNode;
@@ -11,7 +12,7 @@ import chat.interfaces.ChatHash;
 
 public class HashSHA1 implements ChatHash {
 
-	byte[] hash;
+	private byte[] hash;
 	
 	private static int hex(char c) {
 		if(c >= 0x30 && c <= 0x39)
@@ -31,6 +32,7 @@ public class HashSHA1 implements ChatHash {
 			hash = null;
 			return;
 		}
+		assert(hashStr.length() == 40);
 		hash = new byte[20];
 		for(int i = 0; i < 40; i++) {
 			hash[i/2] = (byte) ((hash[i/2] << ((i%2) * 4)) + hex(hashStr.charAt(i)));
@@ -92,6 +94,18 @@ public class HashSHA1 implements ChatHash {
 	
 	public boolean isNull() {
 		return hash == null;
+	}
+
+	@Override
+	public boolean equals(ChatHash other) {
+		if(hash == null || other.getHash() == null)
+			return hash == other.getHash();
+		return Arrays.equals(other.getHash(), hash);
+	}
+
+	@Override
+	public byte[] getHash() {
+		return hash;
 	}
 
 }
