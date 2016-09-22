@@ -14,6 +14,10 @@ import chat.interfaces.ChatDatabase;
 import chat.interfaces.ChatHash;
 import chat.interfaces.ChatSerializer;
 
+/**
+ * Implementation of {@link ChatDatabase} where data is stored locally in a
+ * similar way to git.
+ */
 public class LocalDB implements ChatDatabase {
 
 	private static final String PATH = "./";
@@ -26,6 +30,12 @@ public class LocalDB implements ChatDatabase {
 	private ChatSerializer serializer;
 	private ChatCompressor compressor;
 
+	/**
+	 * Create a LocalDB with the serializer and compressor types.
+	 * 
+	 * @param serializer
+	 * @param compressor
+	 */
 	public LocalDB(ChatSerializer serializer, ChatCompressor compressor) {
 		if (!verifyDir()) {
 			System.out.println("Can't verify data directory");
@@ -36,6 +46,10 @@ public class LocalDB implements ChatDatabase {
 		this.compressor = compressor;
 	}
 
+	/**
+	 * @param path
+	 * @return content of file at {@code path}.
+	 */
 	private byte[] getFileContents(String path) {
 		try {
 			return Files.readAllBytes((new File(path).toPath()));
@@ -47,6 +61,12 @@ public class LocalDB implements ChatDatabase {
 		return null;
 	}
 
+	/**
+	 * Write {@code data} to file at {@code path}.
+	 * 
+	 * @param path
+	 * @param data
+	 */
 	private void writeToFile(String path, byte[] data) {
 		try {
 			Files.write((new File(path).toPath()), data);
@@ -56,21 +76,41 @@ public class LocalDB implements ChatDatabase {
 		}
 	}
 
+	/**
+	 * @param path
+	 * @return {@code true} if file at {@code path} exists.
+	 */
 	public boolean fileExists(String path) {
 		File f = new File(path);
 		return f.exists() && f.isFile() && f.canRead();
 	}
 
+	/**
+	 * @param path
+	 * @return {@code true} if directory at {@code path} exists.
+	 */
 	private boolean dirExists(String path) {
 		File f = new File(path);
 		return f.exists() && f.isDirectory();
 	}
 
+	/**
+	 * Creates a directory at {@code path}.
+	 * 
+	 * @param path
+	 * @return {@code true} if directory was created.
+	 */
 	private boolean makeDir(String path) {
 		File f = new File(path);
 		return f.mkdir();
 	}
 
+	/**
+	 * Makes sure data directory is formated for usage, and creates it if
+	 * needed.
+	 * 
+	 * @return {@code true} if the directory is usable.
+	 */
 	private boolean verifyDir() {
 		for (String path : REQUIRED_DIRS) {
 			if (!dirExists(path)) {
