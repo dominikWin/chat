@@ -13,10 +13,18 @@ import chat.data.ChatNode;
 import chat.data.ChatText;
 import chat.interfaces.ChatDatabase;
 
+/**
+ * HTTP interface for database.
+ */
 public class WebInterface {
 	static HttpServer server;
 	static ChatDatabase db;
 
+	/**
+	 * Sends fail JSON object to client.
+	 * @param s
+	 * @param reason
+	 */
 	private static void fail(HttpExchange s, String reason) {
 		JSONObject json = new JSONObject();
 		json.put("fail", reason);
