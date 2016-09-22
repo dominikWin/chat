@@ -1,11 +1,8 @@
 package chat;
 
-import java.util.Scanner;
-
 import chat.data.ChatNode;
 import chat.data.ChatText;
 import chat.interfaces.ChatHash;
-import chat.interfaces.ChatSerializer;
 
 public class Main {
 	public static void main(String[] args) {
