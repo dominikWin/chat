@@ -1,21 +1,24 @@
 package chat;
 
 import chat.data.ChatText;
-
 import java.io.UnsupportedEncodingException;
-
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
 import chat.data.ChatNode;
 import chat.interfaces.ChatSerializer;
 
+/**
+ * JSON implementation of {@link ChatSerializer}.
+ */
 public class SerializeJSON implements ChatSerializer {
 	private static final String NODE_PREFIX = "node ";
 	private static final String TEXT_PREFIX = "text ";
 
+	/**
+	 * @param text
+	 * @return UTF8 representation of {@code text}.
+	 */
 	private byte[] toByteArray(String text) {
 		try {
 			return text.getBytes("UTF-8");
@@ -60,7 +63,11 @@ public class SerializeJSON implements ChatSerializer {
 
 		return out;
 	}
-	
+
+	/**
+	 * @param text
+	 * @return new {@link ChatText} with {@code text}.
+	 */
 	private ChatText reconstructText(String text) {
 		return new ChatText(text);
 	}
