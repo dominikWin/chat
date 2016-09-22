@@ -10,10 +10,17 @@ import chat.data.ChatText;
 import chat.data.ChatNode;
 import chat.interfaces.ChatHash;
 
+/**
+ * SHA1 implementation of {@link ChatHash}.
+ */
 public class HashSHA1 implements ChatHash {
 
 	private byte[] hash;
 	
+	/**
+	 * @param c
+	 * @return value of hexadecimal character {@code c}.
+	 */
 	private static int hex(char c) {
 		if(c >= 0x30 && c <= 0x39)
 			return c - 0x30;
@@ -23,26 +30,43 @@ public class HashSHA1 implements ChatHash {
 		return -1;
 	}
 	
+	/**
+	 * Create a new null HashSHA1.
+	 */
 	public HashSHA1() {
 		hash = null;
 	}
 	
+	/**
+	 * Create a HashSHA1 from the passed string.
+	 * @param hashStr {@link String} representation of a SHA1.
+	 */
 	public HashSHA1(String hashStr) {
 		if(hashStr == null || hashStr.equals("null")) {
 			hash = null;
 			return;
 		}
 		assert(hashStr.length() == 40);
+
+		// Fairly efficient way to convert string to byte[] for SHA1.
 		hash = new byte[20];
 		for(int i = 0; i < 40; i++) {
 			hash[i/2] = (byte) ((hash[i/2] << ((i%2) * 4)) + hex(hashStr.charAt(i)));
 		}
 	}
 
+	/**
+	 * Create hash from {@link ChatText} object.
+	 * @param content
+	 */
 	public HashSHA1(ChatText content) {
 		hash = hash(content.getContent());
 	}
 
+	/**
+	 * Create hash from {@link ChatNode} object.
+	 * @param node
+	 */
 	public HashSHA1(ChatNode node) {
 		StringBuilder sb = new StringBuilder();
 		
@@ -57,6 +81,10 @@ public class HashSHA1 implements ChatHash {
 		hash = hash(sb.toString());
 	}
 
+	/**
+	 * @param content
+	 * @return SHA1 value of {@link String} {@code content}.
+	 */
 	private static byte[] hash(String content) {
 		byte out[];
 		MessageDigest hashFunction = null;
