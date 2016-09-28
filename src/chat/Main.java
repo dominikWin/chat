@@ -1,28 +1,46 @@
 package chat;
 
+import chat.client.ChatClient;
 import chat.data.ChatNode;
 import chat.data.ChatText;
 import chat.interfaces.ChatHash;
 
 public class Main {
 	public static void main(String[] args) {
-//		ChatText c = new ChatText(new Scanner(System.in).nextLine());
+		if(args.length == 0) {
+			System.err.println("No arguments set");
+			System.exit(1);
+		}
 		
+		if(args.length == 1) {
+			if(args[0].equals("--server") || args[0].equals("-s"))
+				server();
+			else {
+				System.err.println("Unknown argument " + args[0]);
+			}
+		}
+		
+		if(args.length == 2) {
+			client(args[0], Integer.parseInt(args[1]));
+		}
+		
+		System.err.println("Invalid arguments");
+	}
+	
+	private static void client(String ip, int port) {
+		ChatClient c = new ChatClient(ip, port);
+		c.run();
+	}
+
+	private static void server() {
 		LocalDB db = new LocalDB(new SerializeJSON(), new CompressZLIB());
-		ChatHash hash = db.add(new ChatText("Text Text"));
-		hash = db.add(new ChatNode("Auth", 5, hash, null));
-//		
-//		System.out.println(db.getNode(hash).getAuthor());
-		db.setRef("master", hash);
-		
-		WebInterface webInterface = new WebInterface(db);		
-		
-//		HashSHA1 h = new  HashSHA1(c);
-//		System.out.println(h + ":" + h.toString().length());
-//		
-//		ChatSerializer serializer = new SerializeJSON();
-//		String s;
-//		System.out.println(s = new String(serializer.serialize(new ChatNode("Chat", 2, new HashSHA1(), new HashSHA1()))));
-//		System.out.println(((ChatNode) serializer.deserialize(s.getBytes())).getTime());
+
+		if (!db.existsRef("master")) {
+			ChatHash hash = db.add(new ChatText("Text Text"));
+			hash = db.add(new ChatNode("Auth", 5, hash, null));
+			db.setRef("master", hash);
+		}
+
+		WebInterface webInterface = new WebInterface(db);
 	}
 }
