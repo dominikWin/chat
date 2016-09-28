@@ -20,6 +20,7 @@ import chat.interfaces.ChatHash;
  */
 public class WebInterface
 {
+	private static final int PORT = (int) (8000 + (Math.random() * 1000));
 	static HttpServer server;
 	static ChatDatabase db;
 
@@ -65,7 +66,8 @@ public class WebInterface
 		try
 		{
 			WebInterface.server = HttpServer.create(
-					new InetSocketAddress(8001), 0);
+					new InetSocketAddress(PORT), 0);
+			System.out.println("Started server on port " + PORT);
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block
